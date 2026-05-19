@@ -3,457 +3,453 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prográmate | Agenda Universitaria</title>
+    <title>Un Ingrediente Secreto: Te Conozco</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                    },
-                    colors: {
-                        primary: '#6C63FF',
-                        secondary: '#FF6584',
-                        accent: '#FFD93D',
-                    },
-                    animation: {
-                        'blob': 'blob 10s infinite',
-                        'fade-up': 'fadeUp 0.8s ease-out forwards',
-                        'text-shimmer': 'textShimmer 3s ease-in-out infinite alternate',
-                        'shine': 'shine 3s infinite',
-                    },
-                    keyframes: {
-                        blob: {
-                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
-                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
-                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
-                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
-                        },
-                        fadeUp: {
-                            '0%': { opacity: '0', transform: 'translateY(40px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        },
-                        textShimmer: {
-                            '0%': { backgroundPosition: '0% 50%' },
-                            '100%': { backgroundPosition: '100% 50%' },
-                        },
-                        shine: {
-                            '0%': { left: '-100%' },
-                            '20%': { left: '100%' },
-                            '100%': { left: '100%' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom Styles & Animations -->
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap');
+
         body {
-            background-color: #f8fafc;
-            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1, h2, h3, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 1s ease-out forwards;
         }
         
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #6C63FF; border-radius: 4px; }
-
-        /* Super Glass Card */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden; 
+        .animate-fade-in {
+            animation: fadeIn 1s ease-out forwards;
         }
 
-        .glass-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            background: rgba(255, 255, 255, 0.95);
-            border-color: rgba(255, 255, 255, 1);
-            z-index: 10;
-            box-shadow: 0 20px 40px -5px rgba(0,0,0,0.1);
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Shine Effect */
-        .glass-card::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.6), transparent);
-            transform: skewX(-25deg);
-            z-index: 10;
-            transition: 0s; 
-            pointer-events: none;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        .glass-card:hover::after {
-            left: 200%;
-            transition: 0.75s ease-in-out;
+        html {
+            scroll-behavior: smooth;
         }
 
-        /* Animated Background Blobs */
-        .blob-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            overflow: hidden;
-            background: #fff;
-        }
-        .blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.8;
-            mix-blend-mode: multiply; 
-            animation: blob 15s infinite alternate;
-        }
-
-        /* Shine Effect for Buttons */
-        .btn-shine {
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-shine::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
-            transform: skewX(-20deg);
-            animation: shine 4s infinite;
+        /* Estilos para ocultar elementos que se revelarán con JS */
+        .js-hidden {
+            display: none !important;
         }
     </style>
 </head>
-<body class="text-gray-800 antialiased min-h-screen relative selection:bg-accent selection:text-black">
+<body class="min-h-screen bg-stone-50 text-stone-800 selection:bg-rose-200">
 
-    <!-- Dynamic Background -->
-    <div class="blob-container">
-        <div class="blob bg-purple-300 w-96 h-96 top-0 left-0 animate-blob"></div>
-        <div class="blob bg-pink-300 w-96 h-96 bottom-0 right-0 animate-blob" style="animation-delay: 2s"></div>
-        <div class="blob bg-cyan-200 w-80 h-80 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-blob" style="animation-delay: 4s"></div>
-    </div>
-
-    <!-- Main Container -->
-    <div class="max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 py-12 relative z-10">
+    <!-- HEADER / HERO SECTION -->
+    <header class="relative w-full h-[90vh] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
+                 alt="Flores de primavera" 
+                 class="w-full h-full object-cover opacity-60" />
+            <div class="absolute inset-0 bg-gradient-to-b from-rose-100/40 via-stone-50/60 to-stone-50"></div>
+        </div>
         
-        <!-- Header -->
-        <header class="mb-8 md:mb-12 text-center opacity-0 animate-fade-up">
-            <h1 class="text-3xl md:text-5xl lg:text-7xl font-extrabold tracking-tight mb-4">
-                <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-500 to-secondary animate-text-shimmer bg-[length:200%_auto]">
-                    Agenda de Eventos
-                </span>
+        <div class="relative z-10 text-center px-6 max-w-4xl mx-auto flex flex-col items-center animate-fade-in-up">
+            <span class="text-6xl drop-shadow-xl mb-4">✨</span>
+            <h2 class="text-rose-600 font-medium tracking-widest uppercase mb-4">Un ingrediente secreto</h2>
+            <h1 class="text-5xl md:text-7xl font-serif font-bold text-stone-800 mb-6 leading-tight">
+                Te Conozco
             </h1>
-            <div class="h-1 w-16 md:w-24 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
-        </header>
+            <p class="text-lg md:text-xl text-stone-600 mb-8 max-w-2xl leading-relaxed">
+                Hemos hablado de un Dios ilimitado, pero hay algo hermoso detrás de todo esto: 
+                <strong class="font-semibold text-rose-700"> Dios no habla al azar, Él habla porque nos conoce.</strong>
+            </p>
+            <a href="#el-secreto" class="animate-bounce mt-8 p-4 bg-white/80 backdrop-blur rounded-full shadow-lg text-rose-500 hover:text-rose-700 transition-colors">
+                <i data-lucide="arrow-down" class="w-6 h-6"></i>
+            </a>
+        </div>
+    </header>
 
-        <!-- Events Grid (Fixed 3 columns always) -->
-        <!-- Usamos gap-2 en móviles para que quepan, y gap-8 en desktop -->
-        <div id="events-grid" class="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6 lg:gap-8">
-            <!-- Cards will be injected here via JS -->
+    <!-- SECTION 1: LO QUE DIOS CONOCE -->
+    <section id="el-secreto" class="py-20 px-6 max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="text-5xl drop-shadow-md mb-4 inline-block">👁️</span>
+            <h2 class="text-3xl md:text-4xl font-serif font-bold text-stone-800 mb-4">El ingrediente secreto no es mi capacidad...</h2>
+            <p class="text-lg text-stone-600">Es que Dios me conoce y aun así me ama, me llama y me transforma.</p>
         </div>
 
-        <!-- Empty State -->
-        <div id="empty-state" class="hidden text-center py-20">
-            <div class="text-4xl md:text-6xl mb-4 text-gray-300">🍃</div>
-            <h3 class="text-xl md:text-2xl font-bold text-gray-400">Todo tranquilo por aquí...</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Card 1 -->
+            <div class="bg-white rounded-3xl p-8 shadow-xl shadow-rose-100 border border-rose-50 hover:-translate-y-2 transition-transform duration-300">
+                <div class="w-14 h-14 bg-rose-100 rounded-full flex items-center justify-center mb-6 text-rose-600">
+                    <i data-lucide="book-open" class="w-7 h-7"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Conoce lo que nadie ve</h3>
+                <p class="text-stone-600 mb-6">Pensamientos, heridas, luchas, temores.</p>
+                <div class="p-4 bg-stone-50 rounded-xl border-l-4 border-rose-400 italic text-sm text-stone-500">
+                    "Sabes cuándo me siento y cuándo me levanto... todos mis caminos te son familiares." (Salmo 139)
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-white rounded-3xl p-8 shadow-xl shadow-rose-100 border border-rose-50 hover:-translate-y-2 transition-transform duration-300">
+                <div class="w-14 h-14 bg-rose-100 rounded-full flex items-center justify-center mb-6 text-rose-600">
+                    <i data-lucide="shield" class="w-7 h-7"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Conoce tus límites</h3>
+                <p class="text-stone-600 mb-6">Sabe dónde estás, qué te duele y qué te frena. Pero también conoce tu potencial.</p>
+                <div class="p-4 bg-stone-50 rounded-xl border-l-4 border-rose-400 italic text-sm text-stone-500">
+                    "Jehová cumplirá su propósito en mí... No desampares la obra de tus manos." (Salmo 138:8)
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-white rounded-3xl p-8 shadow-xl shadow-rose-100 border border-rose-50 hover:-translate-y-2 transition-transform duration-300">
+                <div class="w-14 h-14 bg-rose-100 rounded-full flex items-center justify-center mb-6 text-rose-600">
+                    <i data-lucide="feather" class="w-7 h-7"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">No se detiene por tus pasivos</h3>
+                <p class="text-stone-600 mb-6">Aunque conoce tus debilidades, nunca dejará de mirarte y trabajar en ti.</p>
+                <div class="p-4 bg-stone-50 rounded-xl border-l-4 border-rose-400 italic text-sm text-stone-500">
+                    "Antes que te formase en el vientre te conocí..." (Jeremías 1:5)
+                </div>
+            </div>
         </div>
+    </section>
 
-
-    </div>
-
-    <!-- Logic -->
-    <script>
-        // --- Configuration ---
-        const categoryConfig = {
-            ecologica: { label: 'Ecológica', icon: 'fa-leaf', color: 'green', gradient: 'from-green-400 to-emerald-600' },
-            cultural: { label: 'Cultural', icon: 'fa-palette', color: 'orange', gradient: 'from-orange-400 to-red-500' },
-            socioeconomica: { label: 'Socioeconómica', icon: 'fa-handshake', color: 'yellow', gradient: 'from-yellow-400 to-amber-600' },
-            espiritual: { label: 'Espiritual', icon: 'fa-praying-hands', color: 'purple', gradient: 'from-purple-400 to-violet-600' },
-            psicoafectiva: { label: 'Psicoafectiva', icon: 'fa-heart', color: 'pink', gradient: 'from-pink-400 to-rose-600' },
-            acompanamiento: { label: 'Acompañamiento', icon: 'fa-users', color: 'blue', gradient: 'from-blue-400 to-indigo-600' },
-            fisica: { label: 'Física', icon: 'fa-running', color: 'red', gradient: 'from-red-400 to-rose-600' },
-            pastoral: { label: 'Pastoral', icon: 'fa-dove', color: 'indigo', gradient: 'from-indigo-400 to-blue-600' },
-            default: { label: 'Evento', icon: 'fa-calendar-day', color: 'gray', gradient: 'from-gray-400 to-gray-600' }
-        };
-
-        // --- Data ---
-        const initialEvents = [
-            { 
-                id: 1, 
-                title: "Eucaristía diaria", 
-                description: "Participa de la Santa Misa de lunes a viernes.",
-                category: "espiritual", 
-                date: "2026-02-05", 
-                time: "12:00", 
-                image: "https://images.unsplash.com/photo-1549508477-3e484818ba7d?q=80&w=1000&auto=format&fit=crop", 
-                link: "https://www.facebook.com/SoyCatolicaDelNorte/live_videos", 
-                location: "Facebook Live",
-                cta: "Participa"
-            },
-            { 
-                id: 2, 
-                title: "Asesoría de CANVAS", 
-                description: "Aprende a utilizar el aula virtual.",
-                category: "acompanamiento", 
-                date: "2026-02-05", 
-                time: "17:00", 
-                image: "https://images.unsplash.com/photo-1770268575689-fd52d232aa5a?q=80&w=1000&auto=format&fit=crop", 
-                link: "https://teams.microsoft.com/meet/27370211625455?p=CEexn0Sq7a7YjClOYj", 
-                location: "Teams",
-                cta: "Conéctate"
-            },
-            { 
-                id: 3, 
-                title: "Bienvenida a estudiantes", 
-                description: "Iniciemos este semestre de la mejor manera.",
-                category: "acompanamiento", 
-                date: "2026-02-06", 
-                time: "17:00", 
-                image: "https://images.unsplash.com/photo-1576267423445-b2e0074d68a4?q=80&w=1000&auto=format&fit=crop", 
-                link: "https://teams.microsoft.com/meet/27370211625455?p=CEexn0Sq7a7YjClOYj", 
-                location: "Teams",
-                cta: "Conéctate"
-            },
-            { 
-                id: 4, 
-                title: "Jornada Mundial del Enfermo", 
-                description: "“La compasión del samaritano: amar llevando el dolor del otro”.",
-                category: "espiritual", 
-                date: "2026-02-11", 
-                time: "12:00", 
-                image: "https://images.unsplash.com/photo-1770302699746-62ba6547df8f?q=80&w=1000&auto=format&fit=crop", 
-                link: "#", 
-                location: "Genially",
-                cta: "Próximamente"
-            },
-            { 
-                id: 5, 
-                title: "Asesoría Mesa de servicios CAVI y SINÚ", 
-                description: "Matrícula, consulta de notas, entre otras funciones.",
-                category: "acompanamiento", 
-                date: "2026-02-19", 
-                time: "17:00", 
-                image: "https://images.unsplash.com/photo-1640163561331-1b68a6474957?q=80&w=1000&auto=format&fit=crop", 
-                link: "https://teams.microsoft.com/meet/26065852428137?p=WbYkj6dKv7zA4O1E7I", 
-                location: "Facebook Live",
-                cta: "Conéctate"
-            },
-            { 
-                id: 6, 
-                title: "Catequesis sobre el sentido de la cuaresma", 
-                description: "Ponente: Pbro. Raúl Ortiz Toro.",
-                category: "espiritual", 
-                date: "2026-02-17", 
-                time: "19:00", 
-                image: "https://images.unsplash.com/photo-1458593140930-1f9049c952c1?q=80&w=1000&auto=format&fit=crop", 
-                link: "https://teams.microsoft.com/meet/29082049767228?p=WJA3Xb1anNo4LWYnDW", 
-                location: "Teams",
-                cta: "Conéctate"
-            },
-            { 
-                id: 7, 
-                title: "Miércoles de Ceniza", 
-                description: "Conviértete y cree en el Evangelio.",
-                category: "espiritual", 
-                date: "2026-02-18", 
-                time: "12:00", 
-                image: "https://images.unsplash.com/photo-1641264720328-d56fe741d450?q=80&w=1000&auto=format&fit=crop", 
-                link: "#", 
-                location: "Genially",
-                cta: "Próximamente"
-            },
-            { 
-                id: 8, 
-                title: "Inscripciones Abiertas: Semilleros de Ajedrez", 
-                description: "Niveles: Básico, Intermedio y Avanzado.",
-                category: "fisica", 
-                date: "2026-02-20", 
-                time: "23:59", 
-                image: "https://images.unsplash.com/photo-1529699211952-734e80c4d42b?q=80&w=1000&auto=format&fit=crop", 
-                link: "https://encuestas.ucn.edu.co/index.php/544484?lang=es", 
-                location: "Teams",
-                cta: "Inscríbete"
-            },
-            { 
-                id: 9, 
-                title: "Bases de datos institucionales", 
-                description: "Biblioteca virtual",
-                category: "acompanamiento", 
-                date: "2026-02-24", 
-                time: "19:00", 
-                image: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1000&auto=format&fit=crop", 
-                link: "https://teams.microsoft.com/meet/24560870187820?p=I3PRIK6gPQUjcK75Qt", 
-                location: "Teams",
-                cta: "Conéctate"
-            },
-            { 
-                id: 10, 
-                title: "Suite Office 365 con el correo SoyUcn", 
-                description: "Copilot, Word, Excel, PowerPoint...",
-                category: "acompanamiento", 
-                date: "2026-03-03", 
-                time: "17:00", 
-                image: "https://images.unsplash.com/photo-1632239776255-0a7f24814df2?q=80&w=1000&auto=format&fit=crop", 
-                link: "https://teams.microsoft.com/meet/2492546171711?p=DkznTxD8kpCZInMqDz", 
-                location: "Teams",
-                cta: "Conéctate"
-            },
-            { 
-                id: 11, 
-                title: "Reglamento estudiantil", 
-                description: "Academia / Admisiones y Registro",
-                category: "acompanamiento", 
-                date: "2026-03-05", 
-                time: "17:00", 
-                image: "https://images.unsplash.com/photo-1758685848208-e108b6af94cc?q=80&w=1000&auto=format&fit=crop", 
-                link: "https://teams.microsoft.com/meet/2448832697025?p=vOKnPZeSIuGGaHbVE5", 
-                location: "Teams",
-                cta: "Conéctate"
-            },
-            { 
-                id: 12, 
-                title: "Socialización del acuerdo de segunda lengua", 
-                description: "Centro de Idiomas",
-                category: "acompanamiento", 
-                date: "2026-03-17", 
-                time: "17:00", 
-                image: "https://images.unsplash.com/photo-1588912914017-923900a34710?q=80&w=1000&auto=format&fit=crop", 
-                link: "https://teams.microsoft.com/meet/26201545354309?p=dP6EeMtPlkNeZYjHCr", 
-                location: "Teams",
-                cta: "Conéctate"
-            }
-        ];
-
-        let events = [...initialEvents];
-
-        // --- DOM Elements ---
-        const grid = document.getElementById('events-grid');
-        const emptyState = document.getElementById('empty-state');
-
-        // --- Formatting Functions ---
-        const formatTime = (timeString) => {
-            const [hours, minutes] = timeString.split(':');
-            const h = parseInt(hours, 10);
-            const ampm = h >= 12 ? 'PM' : 'AM';
-            return `${h % 12 || 12}:${minutes} ${ampm}`;
-        };
-
-        const getMonth = (dateStr) => new Date(dateStr).toLocaleDateString('es-ES', {month: 'short'}).replace('.', '').toUpperCase();
-        const getDay = (dateStr) => new Date(dateStr).getDate() + 1; // Ajuste zona horaria simple
-
-        // --- Render Function ---
-        const renderEvents = () => {
-            grid.innerHTML = '';
-            
-            if (events.length === 0) {
-                emptyState.classList.remove('hidden');
-            } else {
-                emptyState.classList.add('hidden');
+    <!-- SECTION 2: PARA QUÉ ME SIRVE -->
+    <section class="py-20 bg-rose-50/50">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row gap-12 items-center">
+                <div class="md:w-1/3">
+                    <h2 class="text-3xl md:text-5xl font-serif font-bold text-stone-800 mb-6 leading-tight">
+                        ¿Para qué me sirve que Dios me conozca?
+                    </h2>
+                    <p class="text-lg text-stone-600 mb-8">
+                        Significa que no estás sola, perdida ni olvidada; Él sabe exactamente cómo guiar, transformar y sostener tu vida.
+                    </p>
+                    <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         alt="Mujer libre y en paz" 
+                         class="rounded-3xl shadow-2xl object-cover h-80 w-full" />
+                </div>
                 
-                events.forEach((event, index) => {
-                    const config = categoryConfig[event.category] || categoryConfig.default;
-                    
-                    const card = document.createElement('div');
-                    card.style.animationDelay = `${index * 150}ms`;
-                    
-                    // Clases responsivas para el contenedor
-                    // rounded-xl en móvil, rounded-[2rem] en desktop
-                    // h-full para que ocupe todo el alto disponible en la fila
-                    card.className = 'glass-card rounded-xl md:rounded-[2rem] overflow-hidden flex flex-col w-full h-full group opacity-0 animate-fade-up border-transparent';
-                    
-                    card.innerHTML = `
-                        <!-- Imagen: relación de aspecto 4/3 para dar espacio vertical -->
-                        <div class="relative w-full aspect-[4/3] md:h-48 md:aspect-auto overflow-hidden shrink-0">
-                            <img src="${event.image}" alt="${event.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                            
-                            <!-- Modern Overlay -->
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80"></div>
-
-                            <!-- Category Badge: Pequeño pero legible -->
-                            <div class="absolute top-2 right-2 md:top-4 md:right-4 bg-white/90 backdrop-blur-sm text-[8px] md:text-xs font-bold px-2 py-1 md:px-3 md:py-1.5 rounded-full shadow-lg flex items-center gap-1 md:gap-1.5 text-gray-800 border border-white z-10">
-                                <i class="fas ${config.icon} text-${config.color}-500 text-[8px] md:text-xs"></i> 
-                                <span class="hidden md:inline">${config.label}</span> 
-                                <span class="md:hidden truncate max-w-[50px]">${config.label}</span>
-                            </div>
+                <div class="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <!-- Benefit Items -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-rose-100 flex gap-4 items-start hover:shadow-md transition-shadow">
+                        <div class="shrink-0 text-rose-500"><i data-lucide="user-check" class="w-8 h-8"></i></div>
+                        <div>
+                            <h4 class="font-bold text-lg mb-1">Me da Identidad</h4>
+                            <p class="text-stone-600 text-sm mb-3">No depende de lo que otros dicen, sino de lo que Dios sabe de mí.</p>
+                            <span class="inline-block bg-rose-50 text-rose-700 text-xs font-semibold px-2 py-1 rounded">1 Pedro 2:9</span>
                         </div>
-                        
-                        <!-- Contenido: Padding ajustado -->
-                        <div class="p-2 md:p-6 flex-1 flex flex-col relative bg-white/40">
-                            
-                            <!-- Fecha Flotante -->
-                            <div class="absolute -top-4 md:-top-8 left-2 md:left-6 bg-white rounded-lg md:rounded-xl shadow-md p-0.5 md:p-1 text-center w-10 h-10 md:w-16 md:h-16 flex flex-col justify-center items-center border border-gray-100 group-hover:-translate-y-1 md:group-hover:-translate-y-2 transition-transform duration-300 z-10">
-                                <span class="text-[7px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none mb-px md:mb-0.5">${getMonth(event.date)}</span>
-                                <span class="text-sm md:text-2xl font-black text-gray-800 leading-none">${getDay(event.date)}</span>
-                            </div>
-
-                            <!-- Título: Permitimos más líneas en móvil -->
-                            <div class="mt-7 md:mt-8 mb-1 md:mb-2">
-                                <h3 class="text-[10px] md:text-xl font-bold text-gray-800 leading-tight group-hover:text-${config.color}-600 transition-colors duration-300 line-clamp-3 md:line-clamp-2" title="${event.title}">
-                                    ${event.title}
-                                </h3>
-                            </div>
-
-                            <!-- Descripción: Visible en móvil ahora -->
-                            <div class="mb-2 md:mb-4">
-                                <p class="text-[9px] md:text-sm text-gray-500 font-medium leading-relaxed line-clamp-3 md:line-clamp-2">
-                                    ${event.description || 'Descripción breve disponible.'}
-                                </p>
-                            </div>
-                            
-                            <!-- Info: Iconos pequeños, layout en columna para móvil para ahorrar ancho -->
-                            <div class="flex flex-col md:flex-row md:flex-wrap md:items-center gap-1 md:gap-x-4 md:gap-y-2 mb-2 md:mb-4 text-[9px] md:text-sm text-gray-500 font-medium">
-                                <div class="flex items-center gap-1 md:gap-2 group/item rounded-lg transition-colors hover:bg-white/50">
-                                    <div class="w-4 h-4 md:w-9 md:h-9 rounded-full bg-white flex items-center justify-center shadow-sm text-gray-400 text-[8px] md:text-base group-hover:text-${config.color}-500 transition-colors shrink-0">
-                                        <i class="far fa-clock"></i>
-                                    </div>
-                                    <span class="font-bold text-gray-700 whitespace-nowrap">${formatTime(event.time)}</span>
-                                </div>
-                                <div class="flex items-center gap-1 md:gap-2 group/item rounded-lg transition-colors hover:bg-white/50">
-                                    <div class="w-4 h-4 md:w-9 md:h-9 rounded-full bg-white flex items-center justify-center shadow-sm text-gray-400 text-[8px] md:text-base group-hover:text-${config.color}-500 transition-colors shrink-0">
-                                        <i class="fas fa-link"></i>
-                                    </div>
-                                    <span class="font-bold text-gray-700 truncate max-w-[70px] md:max-w-none">${event.location || 'Campus'}</span>
-                                </div>
-                            </div>
-                            
-                            <!-- Botón: Compacto en móvil -->
-                            <div class="mt-auto relative z-20">
-                                <a href="${event.link}" target="_blank" class="btn-shine relative overflow-hidden w-full block text-center text-white font-bold py-1.5 md:py-3 rounded-lg md:rounded-2xl transition-all duration-300 transform group-hover:scale-[1.02] shadow-sm md:shadow-md group-hover:shadow-lg bg-gradient-to-r ${config.gradient}">
-                                    <span class="relative z-10 flex items-center justify-center gap-1 md:gap-2">
-                                        <span class="text-[9px] md:text-base">${event.cta || 'Participa'}</span> 
-                                        <i class="fas fa-arrow-right text-[8px] md:text-sm transition-transform group-hover:translate-x-1"></i>
-                                    </span>
-                                </a>
-                            </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-rose-100 flex gap-4 items-start hover:shadow-md transition-shadow">
+                        <div class="shrink-0 text-rose-500"><i data-lucide="compass" class="w-8 h-8"></i></div>
+                        <div>
+                            <h4 class="font-bold text-lg mb-1">Me da Dirección</h4>
+                            <p class="text-stone-600 text-sm mb-3">Él sabe exactamente hacia dónde debo ir.</p>
+                            <span class="inline-block bg-rose-50 text-rose-700 text-xs font-semibold px-2 py-1 rounded">Salmo 32:8</span>
                         </div>
-                    `;
-                    grid.appendChild(card);
-                });
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-rose-100 flex gap-4 items-start hover:shadow-md transition-shadow">
+                        <div class="shrink-0 text-rose-500"><i data-lucide="coffee" class="w-8 h-8"></i></div>
+                        <div>
+                            <h4 class="font-bold text-lg mb-1">Me da Descanso</h4>
+                            <p class="text-stone-600 text-sm mb-3">No necesito aparentar, no necesito esconderme.</p>
+                            <span class="inline-block bg-rose-50 text-rose-700 text-xs font-semibold px-2 py-1 rounded">Mateo 11:28</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-rose-100 flex gap-4 items-start hover:shadow-md transition-shadow">
+                        <div class="shrink-0 text-rose-500"><i data-lucide="heart" class="w-8 h-8"></i></div>
+                        <div>
+                            <h4 class="font-bold text-lg mb-1">Transforma mi corazón</h4>
+                            <p class="text-stone-600 text-sm mb-3">Él transforma aquello que conoce profundamente.</p>
+                            <span class="inline-block bg-rose-50 text-rose-700 text-xs font-semibold px-2 py-1 rounded">Ezequiel 36:26</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-rose-100 flex gap-4 items-start hover:shadow-md transition-shadow">
+                        <div class="shrink-0 text-rose-500"><i data-lucide="sparkles" class="w-8 h-8"></i></div>
+                        <div>
+                            <h4 class="font-bold text-lg mb-1">Me recuerda mi valor</h4>
+                            <p class="text-stone-600 text-sm mb-3">A Sus ojos fuiste de gran estima, honorable.</p>
+                            <span class="inline-block bg-rose-50 text-rose-700 text-xs font-semibold px-2 py-1 rounded">Isaías 43:4</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-rose-100 flex gap-4 items-start hover:shadow-md transition-shadow">
+                        <div class="shrink-0 text-rose-500"><i data-lucide="anchor" class="w-8 h-8"></i></div>
+                        <div>
+                            <h4 class="font-bold text-lg mb-1">Me da Seguridad</h4>
+                            <p class="text-stone-600 text-sm mb-3">No estoy perdida para Dios, Él es mi buen pastor.</p>
+                            <span class="inline-block bg-rose-50 text-rose-700 text-xs font-semibold px-2 py-1 rounded">Juan 10:14</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: OBSTÁCULOS (Interactivo) -->
+    <section class="py-20 px-6 max-w-4xl mx-auto">
+        <div class="text-center mb-12">
+            <span class="text-6xl drop-shadow-md mb-4 inline-block">🚧</span>
+            <h2 class="text-3xl md:text-4xl font-serif font-bold text-stone-800 mb-4">¿Por qué no avanzo si sé que me conoce?</h2>
+            <p class="text-stone-600">Saber que Dios me conoce no produce cambio automáticamente. Necesitamos responder. <br/><strong>¿Con cuáles de estas barreras te identificas hoy?</strong> (Toca para seleccionar)</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="obstacles-container">
+            <!-- Los obstáculos se generarán con JS -->
+        </div>
+        <div class="mt-8 text-center text-stone-500 italic">
+            "Dios conoce nuestro corazón… pero no invade áreas que no le entregamos."
+        </div>
+    </section>
+
+    <!-- SECTION 4: LA PUERTA (El Gran Momento Interactivo) -->
+    <section class="py-24 bg-stone-900 text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20">
+            <img src="https://images.unsplash.com/photo-1506544777-64cfbe1142df?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
+                 alt="Puerta mística" 
+                 class="w-full h-full object-cover" />
+        </div>
+        
+        <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-5xl font-serif mb-8 text-rose-200">La Invitación de Jesús</h2>
+            
+            <div class="text-2xl font-light italic mb-12 text-stone-300 max-w-2xl mx-auto leading-relaxed">
+                "He aquí, yo estoy a la puerta y llamo; si alguno oye mi voz y abre la puerta, entraré a él, y cenaré con él, y él conmigo."
+                <div class="text-rose-400 text-lg mt-4 font-sans font-semibold">— Apocalipsis 3:20</div>
+            </div>
+
+            <!-- Estado de Puerta Cerrada -->
+            <div id="door-closed" class="flex flex-col items-center animate-pulse">
+                <span id="door-emoji-btn" class="text-8xl drop-shadow-[0_0_30px_rgba(251,113,133,0.5)] mb-6 cursor-pointer hover:scale-110 transition-transform">🚪</span>
+                <p class="mb-6 text-stone-400">Hay puertas en nuestro corazón que siguen cerradas.</p>
+                <button id="open-door-btn" class="bg-rose-600 hover:bg-rose-500 text-white font-bold py-4 px-10 rounded-full text-lg shadow-[0_0_20px_rgba(225,29,72,0.4)] transition-all flex items-center gap-3">
+                    <i data-lucide="key" class="w-5 h-5"></i> Abrir mi corazón a Dios
+                </button>
+            </div>
+
+            <!-- Estado de Puerta Abierta -->
+            <div id="door-opened" class="js-hidden text-center animate-fade-in">
+                <span class="text-8xl drop-shadow-[0_0_30px_rgba(251,113,133,0.8)] mb-6 inline-block animate-bounce">🕊️</span>
+                <h3 class="text-3xl text-rose-300 font-bold mb-4">¡Has abierto la puerta!</h3>
+                <p class="text-xl text-stone-300 max-w-2xl mx-auto">
+                    "Entraré a él..." significa intimidad, comunión y transformación. Cuando permitimos que Dios entre, <strong>sana, ordena, transforma y expande.</strong>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: ¿CÓMO ABRIR MI CORAZÓN? (Oculto inicialmente) -->
+    <section id="section-como-abrir" class="js-hidden py-20 px-6 max-w-5xl mx-auto animate-fade-in">
+        <div class="text-center mb-16">
+            <span class="text-5xl drop-shadow-md mb-4 inline-block">💖</span>
+            <h2 class="text-3xl md:text-4xl font-serif font-bold text-stone-800 mb-4">¿Cómo abrir mi corazón a Dios?</h2>
+            <p class="text-lg text-stone-600">No es solo sentir emoción, es permitir acceso, rendición y transformación.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-white rounded-2xl p-6 shadow-lg shadow-stone-100 border-t-4 border-rose-400">
+                <div class="text-rose-300 font-bold text-4xl mb-2">01</div>
+                <h4 class="text-xl font-bold text-stone-800 mb-2">Reconocer con honestidad</h4>
+                <p class="text-stone-600">Dejar de aparentar y negar lo que hay dentro.</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-lg shadow-stone-100 border-t-4 border-rose-400">
+                <div class="text-rose-300 font-bold text-4xl mb-2">02</div>
+                <h4 class="text-xl font-bold text-stone-800 mb-2">Escuchar Su voz</h4>
+                <p class="text-stone-600">El proceso comienza cuando dejo de ignorar lo que Dios me está hablando.</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-lg shadow-stone-100 border-t-4 border-rose-400">
+                <div class="text-rose-300 font-bold text-4xl mb-2">03</div>
+                <h4 class="text-xl font-bold text-stone-800 mb-2">Rendir el control</h4>
+                <p class="text-stone-600">Es dejar que Dios gobierne donde antes gobernaba yo. (Prov 3:5-6)</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-lg shadow-stone-100 border-t-4 border-rose-400">
+                <div class="text-rose-300 font-bold text-4xl mb-2">04</div>
+                <h4 class="text-xl font-bold text-stone-800 mb-2">Soltar lo que endurece</h4>
+                <p class="text-stone-600">Dejar ir heridas, orgullo, miedo, culpa e incredulidad.</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-lg shadow-stone-100 border-t-4 border-rose-400">
+                <div class="text-rose-300 font-bold text-4xl mb-2">05</div>
+                <h4 class="text-xl font-bold text-stone-800 mb-2">Hablar con sinceridad</h4>
+                <p class="text-stone-600">Dios no busca perfección, busca tu sinceridad. (Jeremías 29:13)</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-lg shadow-stone-100 border-t-4 border-rose-400">
+                <div class="text-rose-300 font-bold text-4xl mb-2">06</div>
+                <h4 class="text-xl font-bold text-stone-800 mb-2">Permitir que permanezca</h4>
+                <p class="text-stone-600">Abrir el corazón no es un momento aislado, es una relación constante. (Juan 15:5)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: CONCLUSIONES Y REFLEXIÓN (Oculto inicialmente) -->
+    <section id="section-conclusiones" class="js-hidden py-20 bg-gradient-to-b from-stone-50 to-rose-100 animate-fade-in">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-5xl font-serif font-bold text-rose-900 mb-10">Conclusiones</h2>
+            
+            <div class="bg-white/60 backdrop-blur p-8 md:p-12 rounded-3xl shadow-xl border border-white mb-12">
+                <ul class="text-left space-y-6 text-lg text-stone-700">
+                    <li class="flex items-start gap-4">
+                        <i data-lucide="check-circle-2" class="w-6 h-6 text-rose-600 shrink-0 mt-1"></i>
+                        <span>Dios conoce mi corazón… pero <strong>la transformación comienza cuando le abro la puerta.</strong></span>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <i data-lucide="check-circle-2" class="w-6 h-6 text-rose-600 shrink-0 mt-1"></i>
+                        <span>Dios quiere ensanchar mi vida… pero primero <strong>debo dejar que trabaje mi corazón.</strong></span>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <i data-lucide="check-circle-2" class="w-6 h-6 text-rose-600 shrink-0 mt-1"></i>
+                        <span>Cuando abro mi corazón a Dios… <strong>dejo de vivir desde mis límites y comienzo a vivir desde Su transformación.</strong></span>
+                    </li>
+                </ul>
+            </div>
+
+            <h3 class="text-2xl font-serif font-bold text-stone-800 mb-6">Reflexiona hoy:</h3>
+            <div class="flex flex-col md:flex-row justify-center gap-4 mb-16">
+                <div class="bg-rose-600 text-white p-4 rounded-xl shadow-lg flex-1">¿Qué puerta de mi vida sigue cerrada?</div>
+                <div class="bg-rose-500 text-white p-4 rounded-xl shadow-lg flex-1">¿Qué área aún no le entrego?</div>
+                <div class="bg-rose-400 text-white p-4 rounded-xl shadow-lg flex-1">¿Estoy escuchando… o realmente abriendo?</div>
+            </div>
+
+            <div class="relative p-10 bg-white rounded-3xl shadow-2xl">
+                <span class="absolute -top-6 -left-6 text-6xl opacity-50 drop-shadow-sm">👑</span>
+                <p class="text-2xl md:text-3xl font-serif text-rose-800 italic leading-relaxed">
+                    "Hoy Jesús no está buscando perfección, está buscando una puerta abierta para transformar nuestro corazón y llevarnos a avanzar en el camino de vida."
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-8 text-center text-stone-500 text-sm bg-stone-100">
+        <p>Un ingrediente secreto: Te conozco. Hecho con ❤️ para inspirar.</p>
+    </footer>
+
+    <!-- BOTÓN SUBIR -->
+    <button id="scroll-to-top" class="fixed bottom-6 right-6 bg-rose-600 text-white p-3 rounded-full shadow-lg hover:bg-rose-700 transition-all z-50 js-hidden flex items-center justify-center">
+        <i data-lucide="arrow-up" class="w-6 h-6"></i>
+    </button>
+
+    <!-- LOGICA JAVASCRIPT -->
+    <script>
+        // 1. Inicializar iconos de Lucide
+        lucide.createIcons();
+
+        // 2. Variables y lógica de Obstáculos
+        const obstacles = [
+            "Sigo resistiéndome, escondiéndome, controlando mi vida.",
+            "Vivo desde mis límites: me veo pequeña, incapaz, herida.",
+            "No tomo decisiones: oír no es suficiente.",
+            "Hay cosas que no he soltado: miedo, orgullo, el pasado.",
+            "Quiero fruto sin proceso.",
+            "Permanezco poco tiempo, soy inconstante."
+        ];
+        
+        const obstaclesContainer = document.getElementById('obstacles-container');
+
+        // Generar las tarjetas de obstáculos
+        obstacles.forEach((obs, idx) => {
+            const div = document.createElement('div');
+            div.className = "cursor-pointer p-5 rounded-2xl border-2 transition-all duration-300 flex items-center gap-4 bg-white border-stone-200 hover:border-rose-200 obstacle-card";
+            div.dataset.index = idx;
+            div.dataset.checked = "false";
+            
+            div.innerHTML = `
+                <div class="w-6 h-6 rounded-full border-2 border-stone-300 flex items-center justify-center shrink-0 check-circle transition-colors">
+                    <i data-lucide="check" class="w-4 h-4 text-white opacity-0 transition-opacity"></i>
+                </div>
+                <p class="text-sm md:text-base text-stone-600 obstacle-text transition-colors">${obs}</p>
+            `;
+            obstaclesContainer.appendChild(div);
+        });
+        
+        // Re-renderizar iconos en los nuevos elementos
+        lucide.createIcons();
+
+        // Agregar evento de click a cada obstáculo
+        document.querySelectorAll('.obstacle-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const isChecked = this.dataset.checked === "true";
+                const newStatus = !isChecked;
+                this.dataset.checked = newStatus;
+
+                const checkCircle = this.querySelector('.check-circle');
+                const checkIcon = this.querySelector('[data-lucide="check"]');
+                const textP = this.querySelector('.obstacle-text');
+
+                if (newStatus) {
+                    this.classList.replace('bg-white', 'bg-rose-100');
+                    this.classList.replace('border-stone-200', 'border-rose-400');
+                    this.classList.replace('hover:border-rose-200', 'shadow-md');
+                    
+                    checkCircle.classList.replace('border-stone-300', 'border-rose-600');
+                    checkCircle.classList.add('bg-rose-600');
+                    checkIcon.classList.replace('opacity-0', 'opacity-100');
+                    
+                    textP.classList.replace('text-stone-600', 'text-rose-900');
+                    textP.classList.add('font-medium');
+                } else {
+                    this.classList.replace('bg-rose-100', 'bg-white');
+                    this.classList.replace('border-rose-400', 'border-stone-200');
+                    this.classList.replace('shadow-md', 'hover:border-rose-200');
+                    
+                    checkCircle.classList.replace('border-rose-600', 'border-stone-300');
+                    checkCircle.classList.remove('bg-rose-600');
+                    checkIcon.classList.replace('opacity-100', 'opacity-0');
+                    
+                    textP.classList.replace('text-rose-900', 'text-stone-600');
+                    textP.classList.remove('font-medium');
+                }
+            });
+        });
+
+        // 3. Lógica de "Abrir la Puerta"
+        const doorClosed = document.getElementById('door-closed');
+        const doorOpened = document.getElementById('door-opened');
+        const sectionComoAbrir = document.getElementById('section-como-abrir');
+        const sectionConclusiones = document.getElementById('section-conclusiones');
+        const openDoorBtn = document.getElementById('open-door-btn');
+        const doorEmojiBtn = document.getElementById('door-emoji-btn');
+
+        function openTheDoor() {
+            doorClosed.classList.add('js-hidden');
+            doorOpened.classList.remove('js-hidden');
+            sectionComoAbrir.classList.remove('js-hidden');
+            sectionConclusiones.classList.remove('js-hidden');
+            
+            // Hacer scroll suave hacia la sección revelada
+            setTimeout(() => {
+                sectionComoAbrir.scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+        }
+
+        openDoorBtn.addEventListener('click', openTheDoor);
+        doorEmojiBtn.addEventListener('click', openTheDoor);
+
+        // 4. Lógica del botón "Subir"
+        const scrollToTopBtn = document.getElementById('scroll-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollToTopBtn.classList.remove('js-hidden');
+            } else {
+                scrollToTopBtn.classList.add('js-hidden');
             }
-        };
+        });
 
-        renderEvents();
-
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
     </script>
 </body>
 </html>
-
